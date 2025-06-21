@@ -19,7 +19,7 @@ if (isset($_SESSION['administrator'])) {
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Registro administradores</title>
+            <title>Sección administradores</title>
 
             <!--Favicon-->
             <link rel="shortcut icon" href="../assets/media/logo.png" type="image/x-icon">
@@ -42,31 +42,60 @@ if (isset($_SESSION['administrator'])) {
 
         <body style="background-color: #FEFFEF;">
             <header>
-                <nav class="navbar navbar-expand-sm navbar-dark fixed-top" style="background-color: #F6ECE2;">
+                <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" style="background-color: #F6ECE2;">
                     <div class="container-fluid">
-                        <img src="../assets/media/logo.png" alt="logo" height="60px" width="60px">
-
-                        <div class="mx-3 my-auto d-flex">
-                            <h2 class="text-dark"><b>School</b><span style="color: #008B9D;">Master</span></h2>
-                        </div>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapsibleNavbar" aria-label="boton1">
+                        <a class="navbar-brand d-flex align-items-center" href="?page=home">
+                            <img src="../assets/media/logo.png" alt="logo" height="50" class="me-2">
+                            <span class="fs-4 text-dark"><strong>School</strong><span style="color: #008B9D;">Master</span></span>
+                        </a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarAdmin"
+                            aria-controls="navbarAdmin" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
-                        <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                            <div class="ms-auto">
-                                <ul class="navbar-nav">
-                                    <li class="nav-item">
-                                        <strong><a class="nav-link bold" style="color: #008B9D;" href="logout">Salir</a></strong>
-                                    </li>
-                                </ul>
-                            </div>
+
+                        <div class="collapse navbar-collapse" id="navbarAdmin">
+                            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" href="?page=home">
+                                        <i class="bi bi-house-door-fill me-1"></i>Inicio
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" href="?page=profilea">
+                                        <i class="bi bi-person-fill me-1"></i>Perfil
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" href="?page=pubs">
+                                        <i class="bi bi-megaphone-fill me-1"></i>Publicaciones
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-danger fw-bold" href="logout">
+                                        <i class="bi bi-box-arrow-right me-1"></i>Salir
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </nav>
             </header>
-            <main>
-                
+            <main class="container pt-5">
+                <?php
+                $page = isset($_GET['page']) ? strtolower($_GET['page']) : 'home';
+                $pagePath = './' . $page . '.php';
+
+                if (file_exists($pagePath)) {
+                    require_once $pagePath;
+
+                    if ($page === 'home') {
+                        require_once './init.php';
+                    }
+                } else {
+                    echo "<div class='container mt-5 pt-5'><div class='alert alert-warning shadow-sm'>La página solicitada no existe.</div></div>";
+                }
+                ?>
+
             </main>
             <!--Complements JS-->
             <script src="../assets/js/bootstrap.bundle.min.js"></script>
